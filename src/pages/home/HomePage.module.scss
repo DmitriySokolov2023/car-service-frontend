@@ -1,0 +1,16 @@
+.home {
+	display: grid;
+	grid-template-columns: 1fr 6fr;
+	gap: 10px;
+	height: 100%;
+}
+.home__nav {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	font-size: 18px;
+	color: #f48220;
+	> a {
+		color: #3a3a3a;
+	}
+}

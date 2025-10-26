@@ -1,0 +1,28 @@
+.form__label {
+	display: grid;
+	grid-template-columns: 23px 20px;
+	text-align: center;
+	align-items: center;
+}
+.form__label_motivations {
+	display: grid;
+	grid-template-columns: 23px 1fr;
+
+	margin-bottom: 15px;
+	text-align: justify;
+	align-items: center;
+	justify-content: center;
+}
+.form__input {
+	margin-right: 10px;
+	transform: scale(1.5);
+}
+
+.form__label_line {
+	display: flex;
+	gap: 20px;
+}
+.form__input_line {
+	margin-right: 5px;
+	transform: scale(1.2);
+}
