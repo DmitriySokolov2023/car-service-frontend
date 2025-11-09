@@ -31,10 +31,8 @@
 	font-weight: normal;
 }
 .header {
-	display: grid;
-	grid-template-columns: 200px 1fr;
-	justify-items: center;
-	align-items: center;
+	display: flex;
+	justify-content: space-between;
 }
 @media (max-width: 1100px) {
 	.header {
@@ -55,9 +53,14 @@
 .header__title {
 	font-weight: bold;
 	font-size: 20px;
-	color: #0c9488;
+	color: #f48220;
 }
-
+.header__logout {
+	font-weight: bold;
+	font-size: 20px;
+	color: #f52d2d;
+	cursor: pointer;
+}
 .common-form {
 	display: flex;
 	flex-direction: column;

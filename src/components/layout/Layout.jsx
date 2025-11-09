@@ -1,14 +1,12 @@
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { clearSession } from '../../utils/authStorage'
 
-const Layout = ({
-	children,
-	title,
-	repeat = false,
-	protect,
-	repeatLink,
-	sum,
-	max,
-}) => {
+const Layout = ({ children, title, protect }) => {
+	const navigate = useNavigate()
+	const onLogout = () => {
+		clearSession()
+		navigate('/login', { replace: true })
+	}
 	return (
 		<div className='wrapper'>
 			<div className='wrapper__item'>
@@ -23,19 +21,9 @@ const Layout = ({
 
 					<div className='header__title'>
 						<p>{title}</p>
-						{repeat && (
-							<>
-								<br />
-								{sum && max && (
-									<p className='mb-20 '>
-										Набрано баллов: {sum} из {max}
-									</p>
-								)}
-								<Link to={`/${repeatLink}`} className='repeat-link'>
-									Заполнить повторно
-								</Link>
-							</>
-						)}
+					</div>
+					<div className='header__logout' onClick={() => onLogout()}>
+						<p>{'Выйти ->'}</p>
 					</div>
 				</header>
 			</div>

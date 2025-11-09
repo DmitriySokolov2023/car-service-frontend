@@ -10,6 +10,7 @@ const InputText = ({
 	width = null,
 	minLength = null,
 	maxLength = null,
+	typeInput,
 }) => {
 	const [text, setText] = useState(value || '')
 	useEffect(() => {
@@ -28,7 +29,7 @@ const InputText = ({
 			style={width && { width: width }}
 		>
 			<input
-				type='text'
+				type={typeInput}
 				value={text}
 				onChange={handleChange}
 				placeholder={placeholder}
@@ -50,6 +51,7 @@ export default function FormInputText({
 	width = null,
 	minLength = null,
 	maxLength = null,
+	typeInput = 'text',
 }) {
 	return (
 		<Controller
@@ -67,6 +69,7 @@ export default function FormInputText({
 						width={width}
 						minLength={minLength}
 						maxLength={maxLength}
+						typeInput={typeInput}
 					/>
 					{fieldState.error && (
 						<span className={styles.error}>{fieldState.error.message}</span>

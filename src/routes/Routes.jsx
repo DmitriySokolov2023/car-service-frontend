@@ -1,86 +1,47 @@
-import { useEffect, useState } from 'react'
+// src/router/Router.jsx
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NotFoundPage from '../pages/not-found/NotFoundPage'
+import RequireAuth from './RequireAuth'
 import { routes } from './routes.data'
 
-const ProtectedRoute = ({ children }) => {
-	const [isAuthenticated, setIsAuthenticated] = useState(
-		localStorage.getItem('isAuthenticated') === 'true'
+const withGuard = (needAuth, Element) =>
+	needAuth ? (
+		<RequireAuth>
+			<Element />
+		</RequireAuth>
+	) : (
+		<Element />
 	)
-	const [checkedAuth, setCheckedAuth] = useState(false)
 
-	useEffect(() => {
-		if (!isAuthenticated) {
-			const password = prompt('Введите пароль для доступа к этой странице:')
-			if (password === 'c[jkf800') {
-				setIsAuthenticated(true)
-				localStorage.setItem('isAuthenticated', 'true')
-			} else {
-				alert('Неверный пароль')
-			}
-		}
-		setCheckedAuth(true)
-	}, [isAuthenticated])
+const Router = () => (
+	<BrowserRouter>
+		<Routes>
+			{routes.map(route => {
+				const ParentEl = withGuard(route.auth, route.component)
 
-	if (!checkedAuth) return null // ждём проверки
-	if (!isAuthenticated) return <div>Доступ запрещен</div>
-	return children
-}
-
-const Router = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				{routes.map(route => {
-					// Защищаем только нужные маршруты
-					const needsAuth = route.requireAdmin
-
-					if (route.children) {
-						return (
-							<Route
-								key={route.path}
-								path={route.path}
-								element={
-									needsAuth ? (
-										<ProtectedRoute>
-											<route.component />
-										</ProtectedRoute>
-									) : (
-										<route.component />
-									)
-								}
-							>
-								{route.children.map(child => (
-									<Route
-										key={child.path}
-										path={child.path}
-										element={<child.component />}
-									/>
-								))}
-							</Route>
-						)
-					}
-
+				if (route.children) {
 					return (
-						<Route
-							key={route.path}
-							path={route.path}
-							element={
-								needsAuth ? (
-									<ProtectedRoute>
-										<route.component />
-									</ProtectedRoute>
-								) : (
-									<route.component />
+						<Route key={route.path} path={route.path} element={ParentEl}>
+							{route.children.map(child => {
+								const ChildEl = withGuard(child.auth, child.component)
+								return (
+									<Route
+										key={child.path || 'index'}
+										index={!!child.index}
+										path={child.path}
+										element={ChildEl}
+									/>
 								)
-							}
-						/>
+							})}
+						</Route>
 					)
-				})}
-				<Route path='*' element={<NotFoundPage />} />
-			</Routes>
-		</BrowserRouter>
-	)
-}
+				}
+
+				return <Route key={route.path} path={route.path} element={ParentEl} />
+			})}
+			<Route path='*' element={<NotFoundPage />} />
+		</Routes>
+	</BrowserRouter>
+)
 
 export default Router

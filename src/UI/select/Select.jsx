@@ -10,12 +10,14 @@ export default function Select({
 	defaultValue,
 	placeholder,
 	onSelectChange,
+	type,
 }) {
 	return (
 		<Controller
 			name={name}
 			control={control}
 			rules={rules}
+			type={type}
 			defaultValue={defaultValue || ''}
 			render={({ field, fieldState }) => (
 				<div className={styles.wrapper}>

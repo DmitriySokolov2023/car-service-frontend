@@ -1,0 +1,21 @@
+.auth {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.auth__body {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 300px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 20px;
+	scale: 1.2;
+}
+
+h3 {
+	text-align: center;
+	color: #f48220;
+}

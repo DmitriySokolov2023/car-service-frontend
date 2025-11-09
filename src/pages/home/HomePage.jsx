@@ -5,7 +5,7 @@ import styles from './HomePage.module.scss'
 
 const HomePage = () => {
 	return (
-		<Layout>
+		<Layout title={'Форс-Авто'}>
 			<div className={styles.home}>
 				<div className='wrapper__item'>
 					<div className={styles.home__nav}>

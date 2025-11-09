@@ -16,16 +16,27 @@
 	margin-bottom: 20px;
 }
 .btn-submit {
-	background-color: #0c9488;
+	background-color: #f48220;
 	border: none;
 	padding: 10px;
 	font-size: 16px;
 	font-family: Gramatika;
 	color: white;
 	border-radius: 15px;
-	width: 50%;
-	margin: 0 auto 20px auto;
+	width: 200px;
+	margin: 0 auto 0px auto;
 	cursor: pointer;
+}
+.add__title {
+	color: #f48220;
+}
+.add__items {
+	border: 1px solid #f48220;
+	padding: 20px;
+	border-radius: 20px;
+}
+.list__items {
+	padding: 20px;
 }
 .btn-export {
 	background-color: #0c9489;
@@ -47,6 +58,17 @@
 	color: white;
 	border-radius: 15px;
 	width: 50%;
+	cursor: pointer;
+}
+.btn-edit {
+	background-color: #f28516;
+	border: none;
+	padding: 5px;
+	font-size: 12px;
+	font-family: Gramatika;
+	color: white;
+	border-radius: 15px;
+
 	cursor: pointer;
 }
 .btn-add {

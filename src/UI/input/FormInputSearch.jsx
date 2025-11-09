@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
-import { searchSender } from '../../api/fixingPoints.js'
-import { searchAllStaff } from '../../api/main-search/mainSearch.js'
 import {
 	searchClasses,
 	searchStudent,
@@ -88,14 +86,6 @@ const InputSearch = ({ value, placeholder, onSelect, onClear, type }) => {
 			if (type === 'classes') {
 				const data = await searchClasses(value)
 				setResults(data.classes || [])
-			}
-			if (type === 'sender') {
-				const data = await searchSender(value)
-				setResults(data.sender || [])
-			}
-			if (type === 'all') {
-				const data = await searchAllStaff(value)
-				setResults(data.all || [])
 			}
 		} catch (err) {
 			console.error('Ошибка поиска:', err)
