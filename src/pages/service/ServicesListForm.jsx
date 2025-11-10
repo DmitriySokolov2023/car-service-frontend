@@ -1,15 +1,14 @@
 import { useForm } from 'react-hook-form'
-import { deleteEmployee, updateEmployee } from '../../api/employees/employees'
+import { deleteService, updateService } from '../../api/services/services'
 import FormInputText from '../../UI/input/FormInputText'
-import Select from '../../UI/select/Select'
-import styles from './EmployeesPage.module.scss'
+import styles from './ServicesPage.module.scss'
 
-const EmployeesListForm = ({ element, role, index, fetchData }) => {
+const ServicesListForm = ({ element, index, fetchData }) => {
 	const handleDelete = async () => {
 		try {
-			const res = await deleteEmployee(element.id)
+			const res = await deleteService(element.id)
 			if (res) {
-				alert('Сотрудник удален!')
+				alert('Услуга удалена!')
 				fetchData()
 			}
 		} catch (err) {
@@ -27,12 +26,12 @@ const EmployeesListForm = ({ element, role, index, fetchData }) => {
 			if (data['active'] === '') {
 				data['active'] = false
 			}
-			const res = await updateEmployee(element.id, data)
+			const res = await updateService(element.id, data)
 			if (res) {
-				alert('Сотрудник обновлен!')
+				alert('Услуга обновлена!')
 			}
 		} catch (err) {
-			console.error('Ошибка при обновлении сотрудника:', err)
+			console.error('Ошибка при обновлении услуги:', err)
 
 			if (err.response?.data?.error) {
 				alert(`Ошибка: ${err.response.data.error}`)
@@ -57,45 +56,36 @@ const EmployeesListForm = ({ element, role, index, fetchData }) => {
 			className={styles.list__items}
 		>
 			<div className={styles.list__id}>{index + 1}</div>
-			<Select
-				name='role_id'
+
+			<FormInputText
 				control={control}
-				options={role}
-				rules={{ required: 'Выберите роль' }}
-				placeholder='Роль'
-				defaultValue={element.role_id}
+				name={'name'}
+				rules={{ required: 'Введите услугу!' }}
+				placeholder={'Услуга'}
+				defaultValue={element.name}
 			/>
 			<FormInputText
 				control={control}
-				name={'full_name'}
-				rules={{ required: 'Введите ФИО!' }}
-				placeholder={'ФИО'}
-				defaultValue={element.full_name}
+				name={'unit'}
+				rules={{ required: 'Введите ед.изм!' }}
+				placeholder='ед.изм'
+				defaultValue={element.unit}
 			/>
 			<FormInputText
 				control={control}
-				name={'phone'}
-				rules={{ required: 'Введите телефон!' }}
-				placeholder='+7 (___) ___-__-__'
-				defaultValue={element.phone}
+				name={'base_price'}
+				rules={{ required: 'Введите цену!' }}
+				placeholder={'Цена'}
+				defaultValue={element.base_price}
 			/>
 			<FormInputText
 				control={control}
-				name={'email'}
-				rules={{ required: 'Введите email!' }}
-				placeholder={'Email'}
-				defaultValue={element.email}
+				name={'description'}
+				rules={{ required: 'Введите описание!' }}
+				placeholder={'Описание'}
+				defaultValue={element.description}
 			/>
-			<Select
-				name='active'
-				control={control}
-				options={[
-					{ value: true, label: 'Активен' },
-					{ value: false, label: 'Не активен' },
-				]}
-				placeholder='Не активен'
-				defaultValue={element.active}
-			/>
+
 			<button className='btn-edit'>edit</button>
 			<button type='button' className='btn-del' onClick={() => handleDelete()}>
 				del
@@ -103,4 +93,4 @@ const EmployeesListForm = ({ element, role, index, fetchData }) => {
 		</form>
 	)
 }
-export default EmployeesListForm
+export default ServicesListForm

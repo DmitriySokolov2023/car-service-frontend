@@ -1,20 +1,19 @@
 import { useForm } from 'react-hook-form'
-import { createEmployee } from '../../api/employees/employees'
+import { createService } from '../../api/services/services'
 import FormInputText from '../../UI/input/FormInputText'
-import Select from '../../UI/select/Select'
-import styles from './EmployeesPage.module.scss'
+import styles from './ServicesPage.module.scss'
 
-const EmployeesForm = ({ role, fetchData }) => {
+const ServicesForm = ({ role, fetchData }) => {
 	const onSubmit = async data => {
 		try {
-			const res = await createEmployee(data)
+			const res = await createService(data)
 			if (res) {
-				alert('Сотрудник добавлен!')
+				alert('Услуга добавлена!')
 			}
 			fetchData()
 			reset()
 		} catch (err) {
-			console.error('Ошибка при создании сотрудника:', err)
+			console.error('Ошибка при создании услуги:', err)
 
 			if (err.response?.data?.error) {
 				alert(`Ошибка: ${err.response.data.error}`)
@@ -38,40 +37,39 @@ const EmployeesForm = ({ role, fetchData }) => {
 	return (
 		<form onSubmit={handleSubmit(onSubmit, onError)} className={styles.form}>
 			<div className={styles.form__item}>
-				<p className={styles.form__label}>Роль</p>
-				<Select
-					name='role_id'
+				<p className={styles.form__label}>Услуга</p>
+				<FormInputText
 					control={control}
-					options={role}
-					rules={{ required: 'Выберите роль' }}
-					placeholder='Роль'
+					name={'name'}
+					rules={{ required: 'Введите услугу!' }}
+					placeholder={'Услуга'}
 				/>
 			</div>
 			<div className={styles.form__item}>
-				<p className={styles.form__label}>Фио</p>
+				<p className={styles.form__label}>ед.изм</p>
 				<FormInputText
 					control={control}
-					name={'full_name'}
-					rules={{ required: 'Введите ФИО!' }}
-					placeholder={'ФИО'}
+					name={'unit'}
+					rules={{ required: 'Введите ед.изм!' }}
+					placeholder={'ед.изм'}
 				/>
 			</div>
 			<div className={styles.form__item}>
-				<p className={styles.form__label}>Телефон</p>
+				<p className={styles.form__label}>Цена</p>
 				<FormInputText
 					control={control}
-					name={'phone'}
-					rules={{ required: 'Введите телефон!' }}
-					placeholder='+7 (___) ___-__-__'
+					name={'base_price'}
+					rules={{ required: 'Введите цену!' }}
+					placeholder='Цена'
 				/>
 			</div>
 			<div className={styles.form__item}>
-				<p className={styles.form__label}>Email</p>
+				<p className={styles.form__label}>Описание</p>
 				<FormInputText
 					control={control}
-					name={'email'}
-					rules={{ required: 'Введите email!' }}
-					placeholder={'Email'}
+					name={'description'}
+					rules={{ required: 'Введите описание!' }}
+					placeholder={'Описание'}
 				/>
 			</div>
 
@@ -81,4 +79,4 @@ const EmployeesForm = ({ role, fetchData }) => {
 		</form>
 	)
 }
-export default EmployeesForm
+export default ServicesForm

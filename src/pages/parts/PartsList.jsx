@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getAllEmployees } from '../../api/employees/employees'
-import EmployeesForm from './EmployeesForm'
-import EmployeesListForm from './EmployeesListForm'
-import styles from './EmployeesPage.module.scss'
+import { getAllParts } from '../../api/parts/parts'
+import PartsForm from './PartsForm'
+import PartsListForm from './PartsListForm'
+import styles from './PartsPage.module.scss'
 
-const EmployeesList = ({ role }) => {
+const PartsList = () => {
 	const [dataList, setDataList] = useState([])
 
 	const fetchData = async () => {
-		const { items } = await getAllEmployees()
+		const { items } = await getAllParts()
 		if (items) setDataList(items)
 	}
 	useEffect(() => {
@@ -18,30 +18,29 @@ const EmployeesList = ({ role }) => {
 	return (
 		<>
 			<div className='add__title' style={{ marginBottom: '10px' }}>
-				Добавить сотрудника
+				Добавить услугу
 			</div>
 			<div className='add__items'>
-				<EmployeesForm role={role} fetchData={fetchData} />
+				<PartsForm fetchData={fetchData} />
 			</div>
 			<div className='add__title' style={{ marginTop: '20px' }}>
-				Список сотрудников
+				Список услуг
 			</div>
 			<div className={styles.list}>
 				<div className={styles.list__header}>
 					<div>id</div>
-					<div>Роль</div>
-					<div>ФИО</div>
-					<div>Телефон</div>
-					<div>Email</div>
-					<div>Статус</div>
+					<div>Серийный №</div>
+					<div>Название детали</div>
+					<div>ед.изм</div>
+					<div>Цена</div>
+					<div>Описание</div>
 					<div></div>
 					<div></div>
 				</div>
 				{dataList &&
 					dataList.map((el, index) => (
-						<EmployeesListForm
+						<PartsListForm
 							element={el}
-							role={role}
 							key={el.id}
 							index={index}
 							fetchData={fetchData}
@@ -51,4 +50,4 @@ const EmployeesList = ({ role }) => {
 		</>
 	)
 }
-export default EmployeesList
+export default PartsList
