@@ -33,7 +33,7 @@ const PartsList = () => {
 					<div>Название детали</div>
 					<div>ед.изм</div>
 					<div>Цена</div>
-					<div>Описание</div>
+					<div>Кол-во</div>
 					<div></div>
 					<div></div>
 				</div>
