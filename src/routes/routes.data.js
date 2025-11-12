@@ -1,4 +1,5 @@
 // routes.data.js
+import CarsPage from '../pages/cars/CarsPage'
 import ClientsPage from '../pages/clients/ClientsPage'
 import EmployeesPage from '../pages/employees/EmployeesPage'
 import HomePage from '../pages/home/HomePage'
@@ -78,6 +79,13 @@ export const routes = [
 				requireAdmin: true,
 				name: 'Клиенты и автомобили',
 				block: 'Клиенты',
+			},
+			{
+				index: true,
+				path: 'clients/cars/:id_client',
+				component: CarsPage,
+				auth: true,
+				requireAdmin: true,
 			},
 			{
 				index: true,
