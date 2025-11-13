@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { createCar } from '../../api/cars/cars'
 import FormInputText from '../../UI/input/FormInputText'
-import styles from './CarsPage.module.scss'
+import styles from './OrdersPage.module.scss'
 
-const CarsForm = ({ fetchData, id_client }) => {
+const OrdersForm = ({ fetchData, id_client }) => {
 	const onSubmit = async data => {
 		data['client_id'] = id_client
 		try {
@@ -104,4 +104,4 @@ const CarsForm = ({ fetchData, id_client }) => {
 		</form>
 	)
 }
-export default CarsForm
+export default OrdersForm

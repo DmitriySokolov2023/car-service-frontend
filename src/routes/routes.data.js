@@ -4,7 +4,7 @@ import ClientsPage from '../pages/clients/ClientsPage'
 import EmployeesPage from '../pages/employees/EmployeesPage'
 import HomePage from '../pages/home/HomePage'
 import LoginPage from '../pages/login/Login'
-import OrderPage from '../pages/order/OrderPage'
+import OrdersPage from '../pages/orders/OrdersPage'
 import PartsPage from '../pages/parts/PartsPage'
 import RolesPage from '../pages/roles/RolesPage'
 import ServicesPage from '../pages/service/ServicesPage'
@@ -26,7 +26,7 @@ export const routes = [
 			{
 				index: true,
 				path: '',
-				component: OrderPage,
+				component: EmployeesPage,
 				auth: true,
 				requireAdmin: true,
 
@@ -77,7 +77,7 @@ export const routes = [
 				component: ClientsPage,
 				auth: true,
 				requireAdmin: true,
-				name: 'Клиенты и автомобили',
+				name: 'Клиенты | Авто | Заказы',
 				block: 'Клиенты',
 			},
 			{
@@ -90,12 +90,19 @@ export const routes = [
 			{
 				index: true,
 				path: 'order',
-				component: OrderPage,
+				component: OrdersPage,
 				auth: true,
 				requireAdmin: true,
-				name: 'Создать заказ-наряд',
-				block: 'Заказы',
 			},
+			// {
+			// 	index: true,
+			// 	path: 'order',
+			// 	component: OrderPage,
+			// 	auth: true,
+			// 	requireAdmin: true,
+			// 	name: 'Создать заказ-наряд',
+			// 	block: 'Заказы',
+			// },
 		],
 	},
 ]

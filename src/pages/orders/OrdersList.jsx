@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation, useParams } from 'react-router'
+import { NavLink, useLocation } from 'react-router'
 import { getCarsByClient } from '../../api/cars/cars'
-import CarsForm from './CarsForm'
-import CarsListForm from './CarsListForm'
-import styles from './CarsPage.module.scss'
+import OrdersForm from './OrdersForm'
+import styles from './OrdersPage.module.scss'
 
-const CarsList = () => {
+const OrdersList = ({ id_car, id_client }) => {
 	const [dataList, setDataList] = useState([])
 	const location = useLocation()
-	const { id_client } = useParams()
+
 	const fio = location.state?.fio || null
 	const fetchData = async () => {
 		const { items } = await getCarsByClient(id_client)
@@ -21,31 +20,36 @@ const CarsList = () => {
 	return (
 		<>
 			<div className='add__title line' style={{ marginBottom: '10px' }}>
-				<div>Добавить автомобиль клиенту № {id_client}</div>
-				<NavLink to={`/clients`} className='router-link active-link'>
-					{'Список клиентов ->'}
+				<div>Добавить заказ-наряд</div>
+				<NavLink
+					to={`/clients/cars/${id_client}`}
+					className='router-link active-link'
+					state={{
+						fio: fio,
+					}}
+				>
+					{'Вернуться к списку авто ->'}
 				</NavLink>
 			</div>
 			<div className='add__items'>
-				<CarsForm fetchData={fetchData} id_client={id_client} />
+				<OrdersForm fetchData={fetchData} id_client={id_client} />
 			</div>
 			<div className='add__title' style={{ marginTop: '20px' }}>
-				Список автомобилей клиента
+				Список заказ-нарядов
 			</div>
 			<div className={styles.list}>
-				{dataList &&
+				{/* {dataList &&
 					dataList.map((el, index) => (
-						<CarsListForm
+						<OrdersListForm
 							element={el}
 							key={el.id}
 							index={index}
 							fetchData={fetchData}
 							id_client={id_client}
-							fio={fio}
 						/>
-					))}
+					))} */}
 			</div>
 		</>
 	)
 }
-export default CarsList
+export default OrdersList

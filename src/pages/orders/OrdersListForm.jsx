@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form'
 import { NavLink } from 'react-router'
 import { deleteCar, updateCar } from '../../api/cars/cars'
 import FormInputText from '../../UI/input/FormInputText'
-import styles from './CarsPage.module.scss'
-const CarsListForm = ({ element, index, fetchData, id_client, fio }) => {
+import styles from './OrdersPage.module.scss'
+const OrdersListForm = ({ element, index, fetchData, id_client }) => {
 	const handleDelete = async () => {
 		try {
 			const res = await deleteCar(element.id)
@@ -132,19 +132,11 @@ const CarsListForm = ({ element, index, fetchData, id_client, fio }) => {
 					del
 				</button>
 
-				<NavLink
-					to={`/order`}
-					className='router-link active-link'
-					state={{
-						id_client: id_client,
-						id_car: element.id,
-						fio: fio,
-					}}
-				>
+				<NavLink to={`/clients`} className='router-link active-link'>
 					{'Оформить заказ-наряд ->'}
 				</NavLink>
 			</div>
 		</form>
 	)
 }
-export default CarsListForm
+export default OrdersListForm
