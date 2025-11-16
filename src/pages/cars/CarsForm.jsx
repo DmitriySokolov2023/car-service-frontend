@@ -7,7 +7,6 @@ const CarsForm = ({ fetchData, id_client }) => {
 	const onSubmit = async data => {
 		data['client_id'] = id_client
 		try {
-			console.log(data)
 			const res = await createCar(data)
 			if (res) {
 				alert('Автомобиль добавлен!')

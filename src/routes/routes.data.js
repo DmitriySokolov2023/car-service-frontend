@@ -4,6 +4,7 @@ import ClientsPage from '../pages/clients/ClientsPage'
 import EmployeesPage from '../pages/employees/EmployeesPage'
 import HomePage from '../pages/home/HomePage'
 import LoginPage from '../pages/login/Login'
+import OrdersDetailsPage from '../pages/orders-details/OrdersDetailsPage'
 import OrdersPage from '../pages/orders/OrdersPage'
 import PartsPage from '../pages/parts/PartsPage'
 import RolesPage from '../pages/roles/RolesPage'
@@ -91,6 +92,13 @@ export const routes = [
 				index: true,
 				path: 'order',
 				component: OrdersPage,
+				auth: true,
+				requireAdmin: true,
+			},
+			{
+				index: true,
+				path: 'order/details/:order_id',
+				component: OrdersDetailsPage,
 				auth: true,
 				requireAdmin: true,
 			},

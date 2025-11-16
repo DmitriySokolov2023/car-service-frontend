@@ -1,38 +1,61 @@
-import { api } from '../client'
+// src/api/orders/ordersService.js
+import { api } from '../client' // твой axios-инстанс
 
-export const getAllOrder = () => {
-	return api
-		.get(`/order`)
-		.then(res => res.data)
+export const getAllOrders = () =>
+	api
+		.get('/orders/get')
+		.then(res => res.data) // { items: [...] }
 		.catch(err => {
-			console.error('Ошибка при получении заказов!', err)
+			console.error('Ошибка загрузки заказов!', err)
 			throw err
 		})
-}
-export const getOrderById = id_order => {
-	return api
-		.get(`/order/${id_order}`)
-		.then(res => res.data)
+
+export const createOrder = ({
+	client_id,
+	car_id,
+	manager_id,
+	status,
+	comment,
+}) =>
+	api
+		.post('/orders/create', { client_id, car_id, manager_id, status, comment })
+		.then(res => res.data) // { item: {...} }
 		.catch(err => {
-			console.error('Ошибка при при получении заказа!', err)
+			console.error('Ошибка создания заказа!', err)
 			throw err
 		})
-}
-export const deleteOrderById = id_order => {
-	return api
-		.delete(`/order/${id_order}`)
-		.then(res => res.data)
+
+export const updateOrder = (
+	id,
+	{ client_id, car_id, manager_id, status, comment }
+) =>
+	api
+		.put(`/orders/update/${id}`, {
+			client_id,
+			car_id,
+			manager_id,
+			status,
+			comment,
+		})
+		.then(res => res.data) // { item: {...} }
 		.catch(err => {
-			console.error('Ошибка при удалении заказа!', err)
+			console.error('Ошибка обновления заказа!', err)
 			throw err
 		})
-}
-export const saveOrder = data => {
-	return api
-		.post(`/order/save`, data)
-		.then(res => res.data)
+
+export const deleteOrder = id =>
+	api
+		.delete(`/orders/delete/${id}`)
+		.then(res => res.data) // { deleted: true, id }
 		.catch(err => {
-			console.error('Ошибка при сохранении сохранении заказа!', err)
+			console.error('Ошибка удаления заказа!', err)
 			throw err
 		})
-}
+export const getOrdersBy = ({ client_id, car_id } = {}) =>
+	api
+		.get('/orders/get/by', { params: { client_id, car_id } })
+		.then(res => res.data) // { items, count }
+		.catch(err => {
+			console.error('Ошибка фильтрации заказов!', err)
+			throw err
+		})

@@ -9,7 +9,14 @@ export const getAllClients = () =>
 			console.error('Ошибка загрузки клиентов!', err)
 			throw err
 		})
-
+export const getClientById = id =>
+	api
+		.get(`/clients/get/${id}`)
+		.then(res => res.data) // { item: {...} }
+		.catch(err => {
+			console.error('Ошибка получения клиента по id!', err)
+			throw err
+		})
 export const createClient = ({ is_company, name, phone, email, comment }) =>
 	api
 		.post('/clients/create', { is_company, name, phone, email, comment })

@@ -1,18 +1,26 @@
 import { useForm } from 'react-hook-form'
 import { NavLink } from 'react-router'
-import { deleteCar, updateCar } from '../../api/cars/cars'
+import { deleteOrder, updateOrder } from '../../api/orders/orderService'
 import FormInputText from '../../UI/input/FormInputText'
+import Select from '../../UI/select/Select'
 import styles from './OrdersPage.module.scss'
-const OrdersListForm = ({ element, index, fetchData, id_client }) => {
+const OrdersListForm = ({
+	element,
+	index,
+	fetchData,
+	id_client,
+	manager,
+	id_car,
+}) => {
 	const handleDelete = async () => {
 		try {
-			const res = await deleteCar(element.id)
+			const res = await deleteOrder(element.id)
 			if (res) {
-				alert('Авто удален!')
+				alert('Заказ удален!')
 				fetchData()
 			}
 		} catch (err) {
-			console.error('Ошибка при удалении авто:', err)
+			console.error('Ошибка при удалении заказа:', err)
 
 			if (err.response?.data?.error) {
 				alert(`Ошибка: ${err.response.data.error}`)
@@ -24,10 +32,11 @@ const OrdersListForm = ({ element, index, fetchData, id_client }) => {
 	const onSubmit = async data => {
 		try {
 			data['client_id'] = id_client
-			console.log(data)
-			const res = await updateCar(element.id, data)
+			data['car_id'] = id_car
+			const res = await updateOrder(element.id, data)
+			fetchData()
 			if (res) {
-				alert('Авто обновлено!')
+				alert('Заказ обновлен!')
 			}
 		} catch (err) {
 			console.error('Ошибка при обновлении авто:', err)
@@ -49,6 +58,7 @@ const OrdersListForm = ({ element, index, fetchData, id_client }) => {
 		control,
 		formState: { errors },
 	} = useForm()
+
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit, onError)}
@@ -57,68 +67,69 @@ const OrdersListForm = ({ element, index, fetchData, id_client }) => {
 			<div className={styles.list__items}>
 				<div className={styles.list__id}>{index + 1}</div>
 				<div className={styles.form__item}>
-					<p className={styles.form__label}>Марка</p>
-					<FormInputText
+					<p className={styles.form__label}>Менеджер</p>
+					<Select
+						name='manager_id'
 						control={control}
-						name={'make'}
-						rules={{ required: 'Введите марку!' }}
-						placeholder={'Марка'}
-						defaultValue={element.make}
+						options={manager}
+						rules={{ required: 'Выберите менеджера' }}
+						placeholder='Менеджер'
+						defaultValue={element.manager_id}
+					/>
+				</div>
+
+				<div className={styles.form__item}>
+					<p className={styles.form__label}>Дата приема</p>
+					<div className={styles.date}>
+						{new Date(element.opened_at)
+							.toLocaleDateString('ru-RU', {
+								day: '2-digit',
+								month: '2-digit',
+								year: 'numeric',
+							})
+							.split('.')
+							.join('-')}
+					</div>
+				</div>
+				<div className={styles.form__item}>
+					<p className={styles.form__label}>Дата закрытия</p>
+					<div className={styles.date}>
+						{element.closed_at
+							? new Date(element.opened_at)
+									.toLocaleDateString('ru-RU', {
+										day: '2-digit',
+										month: '2-digit',
+										year: 'numeric',
+									})
+									.split('.')
+									.join('-')
+							: 'открыт'}
+					</div>
+				</div>
+				<div className={styles.form__item}>
+					<p className={styles.form__label}>Статус заказа</p>
+					<Select
+						name='status'
+						control={control}
+						options={[
+							{ value: 'выполнен', label: 'выполнен' },
+							{ value: 'оплачен', label: 'оплачен' },
+							{ value: 'в_работе', label: 'в_работе' },
+							{ value: 'отменён', label: 'отменён' },
+							{ value: 'новый', label: 'новый' },
+						]}
+						defaultValue={element.status}
+						rules={{ required: 'Выберите статус' }}
+						placeholder='Статус'
 					/>
 				</div>
 				<div className={styles.form__item}>
-					<p className={styles.form__label}>Модель</p>
+					<p className={styles.form__label}>Комментарий</p>
 					<FormInputText
 						control={control}
-						name={'model'}
-						rules={{ required: 'Введите модель!' }}
-						placeholder={'Модель'}
-						defaultValue={element.model}
-					/>
-				</div>
-				<div className={styles.form__item}>
-					<p className={styles.form__label}>VIN</p>
-					<FormInputText
-						control={control}
-						name={'vin'}
-						rules={{ required: 'Введите vin!' }}
-						placeholder='VIN'
-						maxLength={17}
-						minLength={17}
-						defaultValue={element.vin}
-					/>
-				</div>
-				<div className={styles.form__item}>
-					<p className={styles.form__label}>Гос.номер</p>
-					<FormInputText
-						control={control}
-						name={'license_plate'}
-						rules={{ required: 'Введите гос.номер!' }}
-						placeholder={'А000АА152'}
-						maxLength={17}
-						minLength={8}
-						defaultValue={element.license_plate}
-					/>
-				</div>
-				<div className={styles.form__item}>
-					<p className={styles.form__label}>Год</p>
-					<FormInputText
-						control={control}
-						name={'year'}
-						rules={{ required: 'Введите год!' }}
-						placeholder={'2025'}
-						maxLength={10}
-						defaultValue={element.year}
-					/>
-				</div>
-				<div className={styles.form__item}>
-					<p className={styles.form__label}>Пробег</p>
-					<FormInputText
-						control={control}
-						name={'mileage'}
-						rules={{ required: 'Введите пробег!' }}
-						placeholder={'Пробег'}
-						defaultValue={element.mileage}
+						name={'comment'}
+						placeholder='Комментарий'
+						defaultValue={element.comment}
 					/>
 				</div>
 			</div>
@@ -132,8 +143,16 @@ const OrdersListForm = ({ element, index, fetchData, id_client }) => {
 					del
 				</button>
 
-				<NavLink to={`/clients`} className='router-link active-link'>
-					{'Оформить заказ-наряд ->'}
+				<NavLink
+					to={`/order/details/${element.id}`}
+					className='router-link active-link'
+					state={{
+						element: element,
+						id_client: id_client,
+						id_car: id_car,
+					}}
+				>
+					{'Заполнить заказ-наряд ->'}
 				</NavLink>
 			</div>
 		</form>

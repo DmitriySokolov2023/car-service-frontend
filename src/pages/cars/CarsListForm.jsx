@@ -24,7 +24,7 @@ const CarsListForm = ({ element, index, fetchData, id_client, fio }) => {
 	const onSubmit = async data => {
 		try {
 			data['client_id'] = id_client
-			console.log(data)
+
 			const res = await updateCar(element.id, data)
 			if (res) {
 				alert('Авто обновлено!')

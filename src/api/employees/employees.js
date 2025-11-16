@@ -9,6 +9,22 @@ export const getAllEmployees = () => {
 			throw err
 		})
 }
+export const getEmployeesCustom = () =>
+	api
+		.get('/employees/get/custom')
+		.then(res => res.data) // вернётся массив [{ value, label }]
+		.catch(err => {
+			console.error('Ошибка загрузки сотрудников (custom)!', err)
+			throw err
+		})
+export const getEmployeesCustomById = id =>
+	api
+		.get(`/employees/get/custom/${id}`)
+		.then(res => res.data) // { value, label }
+		.catch(err => {
+			console.error('Ошибка загрузки сотрудника (custom by id)!', err)
+			throw err
+		})
 export const createEmployee = payload => {
 	return api
 		.post('/employees/create', payload)

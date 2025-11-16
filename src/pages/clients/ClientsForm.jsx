@@ -9,7 +9,6 @@ const PartsForm = ({ fetchData }) => {
 		try {
 			data['is_company'] = data.is_company === 1 ? false : true
 
-			console.log(data)
 			const res = await createClient(data)
 			if (res) {
 				alert('Клиент добавлен!')

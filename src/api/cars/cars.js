@@ -17,6 +17,15 @@ export const getCarsByClient = clientId =>
 			console.error('Ошибка загрузки авто клиента!', err)
 			throw err
 		})
+
+export const getCarById = id =>
+	api
+		.get(`/cars/get/${id}`)
+		.then(res => res.data) // { item: {...} }
+		.catch(err => {
+			console.error('Ошибка получения авто по id!', err)
+			throw err
+		})
 export const createCar = ({
 	client_id,
 	make,

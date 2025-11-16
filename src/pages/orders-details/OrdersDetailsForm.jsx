@@ -1,20 +1,8 @@
 import { useForm } from 'react-hook-form'
-import { createOrder } from '../../api/orders/orderService'
-import FormInputText from '../../UI/input/FormInputText'
-import Select from '../../UI/select/Select'
-import styles from './OrdersPage.module.scss'
 
-const OrdersForm = ({ fetchData, id_client, id_car, manager }) => {
+const OrdersDetailsForm = () => {
 	const onSubmit = async data => {
-		data['client_id'] = id_client
-		data['car_id'] = id_car
 		try {
-			const res = await createOrder(data)
-			if (res) {
-				alert('Заказ-наряд добавлен!')
-			}
-			fetchData()
-			reset()
 		} catch (err) {
 			console.error('Ошибка при создании детали:', err)
 
@@ -38,18 +26,13 @@ const OrdersForm = ({ fetchData, id_client, id_car, manager }) => {
 	} = useForm()
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit, onError)} className={styles.form}>
-			<div className={styles.form__item}>
-				<p className={styles.form__label}>Менеджер</p>
-				<Select
-					name='manager_id'
-					control={control}
-					options={manager}
-					rules={{ required: 'Выберите менеджера' }}
-					placeholder='Менеджер'
-				/>
-			</div>
-			<div className={styles.form__item}>
+		<form onSubmit={handleSubmit(onSubmit, onError)}>
+			<div>Модуль в разработке</div>
+			{/* <div>Информация о заказ-наряде</div>
+			<div>Информация о клиенте</div>
+			<div>Информация об автомобиле</div>
+			<div>Услуги и запчасти</div> */}
+			{/* <div className={styles.form__item}>
 				<p className={styles.form__label}>Статус заказа</p>
 				<Select
 					name='status'
@@ -77,8 +60,8 @@ const OrdersForm = ({ fetchData, id_client, id_car, manager }) => {
 
 			<button className='btn-submit' style={{ marginTop: '20px' }}>
 				Создать
-			</button>
+			</button> */}
 		</form>
 	)
 }
-export default OrdersForm
+export default OrdersDetailsForm
